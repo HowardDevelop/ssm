@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ssm.dufy.dao.SysUserDao">
+		<resultMap id="BaseResultMap" type="org.ssm.dufy.entity.SysUserInfo">
+				<id column="USER_ID" property="userId" jdbcType="INTEGER" />
+				<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+				<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+				<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+				<result column="DELETEFLAG" property="deleteFlag" jdbcType="VARCHAR" />
+				<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		</resultMap>
+				<sql id="Base_Column_List">
+				USER_ID, USER_NAME, PASSWORD, DESCRIPTION, DELETEFLAG,CREATE_TIME
+		</sql>
+		<select id="findUserInfo" resultMap="BaseResultMap" parameterType="org.ssm.dufy.entity.SysUserInfo">
+				select
+				<include refid="Base_Column_List" />
+				from sys_user where DELETEFLAG = '0'
+				<if test="userName != null">
+						AND USER_NAME = #{userName,jdbcType=VARCHAR}
+				</if>
+		</select>
+</mapper>

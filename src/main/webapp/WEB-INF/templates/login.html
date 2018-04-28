@@ -1,0 +1,51 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta http-equiv="Content-Type" content="text/html;chart=utf-8"/> 
+    <title>Login</title> 
+    <link rel="stylesheet" type="text/css" href="static/login_css/login_new.css"/> 
+    <link rel="stylesheet" type="text/css" href="static/login_css/base.css"/> 
+    <link rel="stylesheet" type="text/css" href="static/login_css/frame.css"/> 
+    <script type="text/javascript" src="static/js/jquery/jquery-1.8.3.js" ></script>
+</head> 
+<body> 
+<div class="login">
+    <h2>统一认证中心</h2>
+    <div class="login-select none">
+        <span class='active' data-type='0'>管理员登陆</span>
+        <span data-type='1'>用户登录</span>
+    </div>
+    <div class="content">
+        <form method="post" id="loginform" name="loginform" th:action="/login">
+            <p class="username"><input class="ipt" type="text" name="userName" placeholder="user"/></p>
+            <p class="password"><input type="password" name="password" placeholder="password"/></p>
+            <span>还没有账号？<b onclick="register()">立即注册</b></span>
+        </form>
+    </div>
+    <div class="foot">
+        <span class="mini-btn login-btn" onclick="checkUserForm()">登陆</span>
+        <span class="mini-btn login-pki-btn" onclick="forgetPassword()">找回密码</span>
+    </div>
+</div>
+<div class="footer">
+   浙江优勝科技有限公司开发&nbsp;&nbsp;@2018
+</div>
+</body>
+<script>
+
+	function checkUserForm() {
+		document.loginform.submit();
+	}
+	function to_top() {
+		if (window != top) {
+			top.location.href = location.href;
+		}
+	}
+	function forgetPassword() {
+		alert("请联系管理员修改密码！管理员邮箱是：cindy.cao@youshengtech.cn");
+	}
+	function register() {
+		alert("内部人员使用，请联系相关联系人获取账号");
+	}
+</script> 
+</html>

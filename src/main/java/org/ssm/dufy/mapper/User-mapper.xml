@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ssm.dufy.dao.UserDao">
+		<resultMap id="BaseResultMap" type="org.ssm.dufy.entity.UserInfo">
+				<id column="ID" property="id" jdbcType="VARCHAR" />
+				<result column="NAME" property="name" jdbcType="VARCHAR" />
+				<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+				<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+				<result column="DELETEFLAG" property="deleteFlag" jdbcType="VARCHAR" />
+		</resultMap>
+		<sql id="Base_Column_List">
+				id, name, password, phone, deleteFlag
+		</sql>
+		<select id="findUserInfo" resultMap="BaseResultMap" parameterType="org.ssm.dufy.entity.UserInfo">
+				select
+				<include refid="Base_Column_List" />
+				from user where DELETEFLAG = '0'
+				<if test="name != null">
+						AND NAME = #{name,jdbcType=VARCHAR}
+				</if>
+				<if test="phone != null">
+						AND PHONE = #{phone,jdbcType=VARCHAR}
+				</if>
+		</select>
+		<insert id="addEntity" parameterType="org.ssm.dufy.entity.UserInfo" flushCache="true">
+				INSERT INTO USER (
+				<if test="name !=null">NAME,</if>
+				<if test="password !=null">PASSWORD,</if>
+				<if test="phone !=null">PHONE</if>
+				) VALUES (
+				<if test="name !=null">#{name,jdbcType=VARCHAR},</if>
+				<if test="password !=null">#{password,jdbcType=VARCHAR},</if>
+				<if test="phone !=null">#{phone,jdbcType=VARCHAR}</if>
+				)
+		</insert>
+		<update id="editEntity" parameterType="org.ssm.dufy.entity.UserInfo">
+				UPDATE USER SET
+				<if test="name !=null">NAME=#{name,jdbcType=VARCHAR}</if>
+				<if test="password !=null">,PASSWORD = #{password,jdbcType=VARCHAR}</if>
+				<if test="phone !=null">,PHONE =#{phone,jdbcType=VARCHAR}</if>
+				<if test="deleteFlag !=null">DELETEFLAG =#{deleteFlag,jdbcType=VARCHAR}</if>
+				WHERE ID=#{id,jdbcType=VARCHAR}
+		</update>
+		<delete id="deleteByNames" parameterType="java.lang.String">
+				DELETE FROM USER
+				<if test="name !=null">WHERE NAME=#{name,jdbcType=VARCHAR}</if>
+		</delete>
+		<select id="findUserEquiment" resultMap="BaseResultMap" parameterType="java.lang.String">
+				SELECT *
+				from EQ_USER
+				where USERID = #{id,jdbcType=VARCHAR}
+		</select>
+</mapper>
